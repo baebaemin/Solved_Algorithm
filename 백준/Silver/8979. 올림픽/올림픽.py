@@ -1,7 +1,8 @@
+import sys
 N, K = map(int, input().split())
 lst = [0] * N
 for i in range(N):
-    n, G, S, B = map(int, input().split())
+    n, G, S, B = map(int, sys.stdin.readline().split())
     lst[n-1] = (G*3 + S*2 + B*1, n*-1)
 item, score = lst[K-1], lst[K-1][0]
 lst = [(-1, 0)] + sorted(lst, reverse=True)
