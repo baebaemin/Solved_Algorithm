@@ -11,10 +11,8 @@ while 1:
         ppl.append(frame[v][0])
     person = people.pop(0)
     if person not in ppl:               # 액자에 해당 사람이 없다면
-        try:
-            frame[p] = [person, 1]      # 액자에 사람 채우기
-            p += 1
-        except: break
+        frame[p] = [person, 1]      # 액자에 사람 채우기
+        p += 1
     else: frame[ppl.index(person)][1] += 1
 
 for p in range(len(people)):
@@ -29,9 +27,5 @@ for p in range(len(people)):
         frame.remove(frame[vote.index(min(vote))])
         frame.append([people[p], 1])
 
-
-f_lst = []
-for n in range(N):
-    if frame[n][0]:
-        f_lst.append(frame[n][0])
-print(*sorted(f_lst))
+rlt = [frame[n][0] for n in range(N) if frame[n][0]]
+print(*sorted(rlt))
