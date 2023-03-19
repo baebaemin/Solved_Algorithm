@@ -1,14 +1,27 @@
 import sys
+from collections import deque
 
-def DFS(n):
+def BFS(n, cnt):
     if v[n]:
         return
-    v[n] = 1
-    for m in adjL[n]:
-        DFS(m)
+    Q = deque([n])
+    v[n] = cnt
+    while Q:
+        n = Q.popleft()
+        for m in adjL[n]:
+            if not v[m]:
+                v[m] = cnt
+                Q.append(m)
+
+    for i in range(1, N+1):
+        if not v[i]:
+            BFS(i, cnt+1)
+            break
+    else:
+        print(cnt)
 
 input = sys.stdin.readline
-N, M = map(int, input().split())  # 정점의 개수 / 간선의 개수
+N, M = map(int, input().split())     # 정점의 개수 간선의 개수
 adjL = [[] for _ in range(N+1)]
 v = [0] * (N + 1)
 
@@ -17,10 +30,8 @@ for _ in range(M):
     adjL[t].append(u)
     adjL[u].append(t)
 
-cnt = 0
-for i in range(1, N+1):
-    if not v[i]:
-        DFS(i)
-        cnt += 1
+if M == 0:
+    print(N)
+    exit()
 
-print(cnt)
+BFS(t, 1)
