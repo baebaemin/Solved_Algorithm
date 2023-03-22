@@ -6,11 +6,14 @@ for i in range(N):
         room[g][c] += 1
     except:
         room[g][c] = 1
-
+        
 cnt = 0
-for j in range(1, 7):
-    if j in room[0]:
-        cnt += room[0][j] // K + room[0][j] % K
-    if j in room[1]:
-        cnt += room[1][j] // K + room[1][j] % K
+for i in range(1,7):
+    try:
+        cnt += room[0][i] // K + room[0][i] % K
+    except: pass
+    try:
+        cnt += room[1][i] // K + room[1][i] % K
+    except: pass
+
 print(cnt)
