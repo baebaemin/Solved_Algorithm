@@ -1,10 +1,12 @@
+import sys; input = sys.stdin.readline
+
 def myRound(n):
     if 1 - (n % 1) <= 0.5:
         return int(n // 1 + 1)
     else:
         return int(n // 1)
-    
-    
+
+
 N = int(input())
 ex = myRound(N * 0.15)
 people = N - (ex * 2)
