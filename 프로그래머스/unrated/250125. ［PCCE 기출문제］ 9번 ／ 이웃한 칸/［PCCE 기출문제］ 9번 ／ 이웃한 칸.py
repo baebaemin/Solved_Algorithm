@@ -1,28 +1,12 @@
 def solution(board, h, w):
-    count = 0
+    length = len(board)
+    dh, dw = [-1, 1, 0, 0], [0, 0, -1, 1]
     
-    try: 
-        if board[h][w] == board[h-1][w] and h-1 != -1:
-            count += 1
-    except: pass
+    cnt = 0
+    for i in range(4):
+        check_dh= h+dh[i]
+        check_dw = w+dw[i]
+        if 0 <= check_dh < length and 0 <= check_dw < length and board[check_dh][check_dw] == board[h][w]:
+            cnt += 1
 
-    try: 
-        if board[h][w] == board[h+1][w]:
-            count += 1
-    except: pass
-    try: 
-        if board[h][w] == board[h][w-1] and w-1 != -1:
-            count += 1
-    except: pass
-    try: 
-        if board[h][w] == board[h][w+1]:
-            count += 1
-    except: pass
-            
-    return count
-
-
-["blue", "red", "orange", "red"], 
-["red", "red", "blue", "orange"], 
-["blue", "orange", "red", "red"], 
-["orange", "orange", "red", "blue"]
+    return cnt
