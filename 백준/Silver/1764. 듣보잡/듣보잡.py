@@ -1,21 +1,14 @@
 import sys
 N, M = map(int, sys.stdin.readline().split())
 
-person_dict = {}
-person_lst = []
-
+never_heard = set()
 for _ in range(N):
-    name = sys.stdin.readline().strip()
-    person_dict[name] = 0
+    never_heard.add(sys.stdin.readline().strip())
 
+never_seen = set()
 for _ in range(M):
-    name = sys.stdin.readline().strip()
-    try:
-        person_dict[name] += 1
-        person_lst.append(name)
-    except:
-        pass
+    never_seen.add(sys.stdin.readline().strip())
 
-print(len(person_lst))
-person_lst.sort()
-print(*person_lst, sep='\n')
+result = sorted(list(never_heard & never_seen))
+print(len(result))
+print(*result, end='\n')
