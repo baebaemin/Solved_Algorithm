@@ -1,18 +1,18 @@
 from collections import deque
 
 def bfs(n, adj):
-    v = [0] * (n+1)
+    visited = [0] * (n+1)
     q = deque([1])
-    v[1] = 1
+    visited[1] = 1
     
     while q:
         now = q.popleft()
         for next in adj[now]:
-            if not v[next]:
-                v[next] = v[now] + 1
+            if not visited[next]:
+                visited[next] = visited[now] + 1
                 q.append(next)
                 
-    return v.count(max(v))
+    return visited.count(max(visited))
 
 def solution(n, edge):
     adj = [[] for _ in range(n+1)]
