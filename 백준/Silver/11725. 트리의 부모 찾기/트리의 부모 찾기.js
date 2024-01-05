@@ -17,7 +17,7 @@ const bfs = (adj) => {
   visited[1] = 0;
 
   while (queue.length > 0) {
-    let node = queue.shift();
+    let node = queue.pop();
     for (const next of adj[node]) {
       if (visited[next] === false) {
         queue.push(next);
