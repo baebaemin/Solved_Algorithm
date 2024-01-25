@@ -12,42 +12,30 @@ const solution = ([num, target]) => {
   visited[num] = true;
   const queue = [num];
 
+  const checkNum = (next, type, current) => {
+    if (!visited[next]) {
+      queue.push(next);
+      visited[next] = true;
+      command[next] = command[current] + type;
+    }
+  };
+
   while (queue.length > 0) {
     let current = queue.shift();
 
-    // D 연산
     let D = (current * 2) % 10000;
-    if (!visited[D]) {
-      queue.push(D);
-      visited[D] = true;
-      command[D] = command[current] + "D";
-    }
+    checkNum(D, "D", current);
 
-    // S 연산
     let S = current === 0 ? 9999 : current - 1;
-    if (!visited[S]) {
-      queue.push(S);
-      visited[S] = true;
-      command[S] = command[current] + "S";
-    }
+    checkNum(S, "S", current);
 
-    // L 연산 (왼쪽으로 회전)
-    let L = parseInt(String(current).padStart(4, '0').substring(1) + String(current).padStart(4, '0')[0], 10);
-    if (!visited[L]) {
-      queue.push(L);
-      visited[L] = true;
-      command[L] = command[current] + "L";
-    }
+    let tempNum = String(current).padStart(4, '0');
+    let L = parseInt(tempNum.substring(1) + tempNum[0], 10);
+    checkNum(L, "L", current);
 
-    // R 연산 (오른쪽으로 회전)
-    let R = parseInt(String(current).padStart(4, '0').slice(-1) + String(current).padStart(4, '0').substring(0, 3), 10);
-    if (!visited[R]) {
-      queue.push(R);
-      visited[R] = true;
-      command[R] = command[current] + "R";
-    }
+    let R = parseInt(tempNum.slice(-1) + tempNum.substring(0, 3), 10);
+    checkNum(R, "R", current);
 
-    // 목표 도달 시
     if (visited[target]) {
       console.log(command[target]);
       return;
