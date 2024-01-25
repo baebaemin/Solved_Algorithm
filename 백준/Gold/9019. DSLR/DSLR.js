@@ -6,39 +6,40 @@ const readline = require("readline").createInterface({
 let N, countN;
 
 const solution = ([num, target]) => {
-  const visited = new Array(10001).fill(false);
-  const command = new Array(10001).fill("");
-
-  visited[num] = true;
+  const visited = new Array(10001).fill(null);
+  visited[num] = "";
   const queue = [num];
-
-  const checkNum = (next, type, current) => {
-    if (!visited[next]) {
-      queue.push(next);
-      visited[next] = true;
-      command[next] = command[current] + type;
-    }
-  };
 
   while (queue.length > 0) {
     let current = queue.shift();
 
+    if (current === target) {
+      console.log(visited[current]);
+      return;
+    }
+
     let D = (current * 2) % 10000;
-    checkNum(D, "D", current);
+    if (visited[D] === null) {
+      queue.push(D);
+      visited[D] = visited[current] + "D";
+    }
 
     let S = current === 0 ? 9999 : current - 1;
-    checkNum(S, "S", current);
+    if (visited[S] === null) {
+      queue.push(S);
+      visited[S] = visited[current] + "S";
+    }
 
-    let tempNum = String(current).padStart(4, '0');
-    let L = parseInt(tempNum.substring(1) + tempNum[0], 10);
-    checkNum(L, "L", current);
+    let L = (current % 1000) * 10 + Math.floor(current / 1000);
+    if (visited[L] === null) {
+      queue.push(L);
+      visited[L] = visited[current] + "L";
+    }
 
-    let R = parseInt(tempNum.slice(-1) + tempNum.substring(0, 3), 10);
-    checkNum(R, "R", current);
-
-    if (visited[target]) {
-      console.log(command[target]);
-      return;
+    let R = (current % 10) * 1000 + Math.floor(current / 10);
+    if (visited[R] === null) {
+      queue.push(R);
+      visited[R] = visited[current] + "R";
     }
   }
 };
